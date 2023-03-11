@@ -22,7 +22,6 @@ onp(Expr) -> onp(string:tokens(Expr, " "), []).
 onp(["+" | Tokens], [Second, First | Tail]) -> onp(Tokens, [First + Second | Tail]);
 onp(["-" | Tokens], [Second, First | Tail]) -> onp(Tokens, [First - Second | Tail]);
 onp(["*" | Tokens], [Second, First | Tail]) -> onp(Tokens, [First * Second | Tail]);
-onp(["/" | _Tokens], [0 | _Tail]) -> io:format("Cannot divide by 0");
 onp(["/" | Tokens], [Second, First | Tail]) -> onp(Tokens, [First / Second | Tail]);
 onp(["sqrt" | Tokens], [Value | Tail]) -> onp(Tokens, [math:sqrt(Value) | Tail]);
 onp(["pow" | Tokens], [Second, First | Tail]) -> onp(Tokens, [math:pow(First, Second) | Tail]);
@@ -30,5 +29,5 @@ onp(["sin" | Tokens], [Value | Tail]) -> onp(Tokens, [math:sin(Value) | Tail]);
 onp(["cos" | Tokens], [Value, Tail]) -> onp(Tokens, [math:cos(Value) | Tail]);
 onp(["tg" | Tokens], [Value, Tail]) -> onp(Tokens, [math:tan(Value) | Tail]);
 onp(["ctg" | Tokens], [Value, Tail]) -> onp(Tokens, [1/math:tan(Value) | Tail]);
-onp([Number | Tokens], Stack) -> onp(Tokens, [ element(1, string:to_float(Number)) | Stack]);
+onp([Number | Tokens], Stack) -> onp(Tokens, [ element(1, string:to_float(Number ++ ".0")) | Stack]);
 onp([], [Result]) -> Result.
